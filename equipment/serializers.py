@@ -4,4 +4,27 @@ from .models import Equipment
 class EquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipment
-        fields = '__all__'
+        fields = ['id', 'name', 'inventory_number', 'machine', 'created_at']
+
+    def validate_inventory_number(self, value):
+        if self.instance and self.instance.inventory_number == value:
+            raise serializers.ValidationError("Inventory number must be unique.")
+
+        if Equipment.objects.filter(inventory_number=value).exists():
+            raise serializers.ValidationError("Another equipment with this inventory number already exists.")
+
+        return value
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+        self.add_success_message(instance, created=True)
+        return instance
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        self.add_success_message(instance, created=False)
+        return instance
+
+    def add_success_message(self, instance, created):
+        success_message = "Equipment created successfully!" if created else "Equipment updated successfully!"
+        setattr(self.context['view'], 'success_message', success_message)
