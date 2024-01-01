@@ -7,11 +7,12 @@ from .models import Machine
 from .serializers import MachineSerializer
 from equipment.models import Equipment
 from equipment.serializers import EquipmentSerializer
+from .filters import MachineFilter
 
 class MachineListCreateView(generics.ListCreateAPIView):
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer
-
+    filterset_class = MachineFilter
 class MachineDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer

@@ -10,7 +10,14 @@ class EquipmentSerializer(serializers.ModelSerializer):
         model = Equipment
         fields = ['id', 'name', 'inventory_number', 'machine_id', 'created_at']
 
-    # ...
+    def validate_inventory_number(self, value):
+        if self.instance and self.instance.inventory_number == value:
+            return value
+
+        if Equipment.objects.filter(inventory_number=value).exists():
+            raise serializers.ValidationError("Another equipment with this inventory number already exists.")
+
+        return value
 
     def create(self, validated_data):
         machine_id = validated_data.pop('machine_id', None)
@@ -22,8 +29,17 @@ class EquipmentSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         machine_id = validated_data.pop('machine_id', None)
-        instance = super().update(instance, validated_data)
+
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
         if machine_id:
             instance.machine_id = machine_id
-            instance.save()
+
+        instance.save()
+        self.add_success_message(instance, created=False)
         return instance
+
+    def add_success_message(self, instance, created):
+        success_message = "Equipment created successfully!" if created else "Equipment updated successfully!"
+        setattr(self.context['view'], 'success_message', success_message)

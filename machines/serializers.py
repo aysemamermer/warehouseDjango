@@ -1,8 +1,4 @@
-from rest_framework import serializers
 from .models import Machine
-
-from rest_framework import serializers
-
 from rest_framework import serializers
 
 class MachineSerializer(serializers.ModelSerializer):
@@ -12,7 +8,7 @@ class MachineSerializer(serializers.ModelSerializer):
 
     def validate_inventory_number(self, value):
         if self.instance and self.instance.inventory_number == value:
-            raise serializers.ValidationError("Inventory number must be unique.")
+            return value
 
         if Machine.objects.filter(inventory_number=value).exists():
             raise serializers.ValidationError("Another machine with this inventory number already exists.")
@@ -25,7 +21,13 @@ class MachineSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        instance = super().update(instance, validated_data)
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        if Machine.objects.exclude(id=instance.id).filter(inventory_number=validated_data['inventory_number']).exists():
+            raise serializers.ValidationError("Another machine with this inventory number already exists.")
+
+        instance.save()
         self.add_success_message(instance, created=False)
         return instance
 
