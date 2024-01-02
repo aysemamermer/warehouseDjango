@@ -21,13 +21,12 @@ class MachineSerializer(serializers.ModelSerializer):
         return instance
 
     def update(self, instance, validated_data):
-        for key, value in validated_data.items():
-            setattr(instance, key, value)
+        instance.__dict__.update(validated_data)
+        instance.save()
 
         if Machine.objects.exclude(id=instance.id).filter(inventory_number=validated_data['inventory_number']).exists():
             raise serializers.ValidationError("Another machine with this inventory number already exists.")
 
-        instance.save()
         self.add_success_message(instance, created=False)
         return instance
 

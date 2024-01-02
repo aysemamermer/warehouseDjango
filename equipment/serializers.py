@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Equipment, Machine
 
+
 class EquipmentSerializer(serializers.ModelSerializer):
     machine_id = serializers.PrimaryKeyRelatedField(
         queryset=Machine.objects.all(), source='machine', required=False

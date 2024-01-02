@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .filters import EquipmentFilter
 
+
 class EquipmentListCreateView(generics.ListCreateAPIView):
     serializer_class = EquipmentSerializer
     filterset_class = EquipmentFilter
@@ -15,9 +16,11 @@ class EquipmentListCreateView(generics.ListCreateAPIView):
         queryset = Equipment.objects.all()
         return queryset
 
+
 class EquipmentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
+
 
 class EquipmentDeleteView(APIView):
     def delete(self, request, pk):
@@ -25,9 +28,9 @@ class EquipmentDeleteView(APIView):
         equipment.delete()
         return Response({'message': 'Equipment deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
+
 class EquipmentCreateView(APIView):
     def post(self, request, *args, **kwargs):
-        # Burada eklenecek ekipmanın verilerini request'ten alın ve serializer kullanarak kaydedin.
         serializer = EquipmentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
