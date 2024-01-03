@@ -30,6 +30,14 @@ class MachineListCreateView(generics.ListCreateAPIView):
             response.data['success_message'] = success_message
         return response
 
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        success_message = getattr(self, 'success_message', None)
+        if success_message:
+            response.data['success_message'] = success_message
+        return response
+
+
 class MachineDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer
@@ -63,7 +71,8 @@ class MachineDeleteView(generics.DestroyAPIView):
         equipment_count = Equipment.objects.filter(machine=instance).count()
 
         if equipment_count > 0:
-            raise APIException(detail='This machine is associated with equipment. You cannot delete it.', code=status.HTTP_400_BAD_REQUEST)
+            raise APIException(detail='This machine is associated with equipment. You cannot delete it.',
+                               code=status.HTTP_400_BAD_REQUEST)
 
         self.perform_destroy(instance)
         success_message = f"Machine {instance.name} deleted successfully."

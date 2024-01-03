@@ -27,7 +27,7 @@ class EquipmentAPITest(TestCase):
         self.assertEqual(Equipment.objects.count(), 1)
         self.assertEqual(Equipment.objects.get().name, 'Test Equipment')
 
-    def test_create_equipment_with_machine(self):
+    def test_create_equipment_machine(self):
         url = reverse('equipment-list-create')
         response = self.client.post(url, data=self.equipment_with_machine_data, format='json')
 

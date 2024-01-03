@@ -8,6 +8,4 @@ class EquipmentFilter(django_filters.FilterSet):
         fields = {
             'name': ['exact', 'icontains'],
             'inventory_number': ['exact', 'icontains'],
-            'machine__name': ['exact', 'icontains'],
-            'created_at': ['exact', 'gte', 'lte'],
         }
