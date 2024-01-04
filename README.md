@@ -107,7 +107,7 @@ python manage.py migrate
 - **Response:** JSON representation of machine details and associated equipment list.
 
 ## Additional Notes
-
+- 
 - Success messages are included in the response for create, update, and delete operations.
 - If an attempt is made to delete a machine associated with equipment, a 400 Bad Request error will be returned along with an appropriate error message.
 
