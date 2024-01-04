@@ -89,6 +89,9 @@ python manage.py migrate
 - **Parameters:** Machine ID (pk) for GET, PUT, and DELETE
 - **Response:** JSON representation of machine details or success message for DELETE.
 
+### Get connected equipments
+- **Endpoint:** `machines/<int:pk>/equipments/`
+- **Methods:** GET
 
 
 ## IMPORTANT
