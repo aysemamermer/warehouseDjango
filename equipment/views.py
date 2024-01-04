@@ -6,14 +6,25 @@ from rest_framework import status
 from machines.serializers import MachineSerializer
 from .models import Equipment
 from .serializers import EquipmentSerializer
+from rest_framework import viewsets
+from django.db.models import Q
+from .models import Equipment
+from .serializers import EquipmentSerializer
+from machines.models import Machine
 
-
-class EquipmentListCreateView(generics.ListCreateAPIView):
+class EquipmentViewSet(viewsets.ModelViewSet):
     serializer_class = EquipmentSerializer
 
     def get_queryset(self):
-        """Retrieve all equipment objects"""
         queryset = Equipment.objects.all()
+        #filter
+        search_param = self.request.query_params.get('search', None)
+        if search_param:
+            queryset = queryset.filter(
+                Q(name__icontains=search_param) |
+                Q(inventory_number__icontains=search_param)
+            )
+
         return queryset
 
     def list(self, request, *args, **kwargs):
@@ -32,11 +43,6 @@ class EquipmentListCreateView(generics.ListCreateAPIView):
             response.data['success_message'] = success_message
         return response
 
-
-class EquipmentDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Equipment.objects.all()
-    serializer_class = EquipmentSerializer
-
     def update(self, request, *args, **kwargs):
         """Override the update method to include success_message in the response"""
         response = super().update(request, *args, **kwargs)
@@ -44,6 +50,14 @@ class EquipmentDetailView(generics.RetrieveUpdateDestroyAPIView):
         if success_message:
             response.data['success_message'] = success_message
         return response
+
+class EquipmentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Specify the queryset and serializer class for the view"""
+    queryset = Equipment.objects.all()
+    serializer_class = EquipmentSerializer
+
+
+
 
 
 class EquipmentDeleteView(APIView):

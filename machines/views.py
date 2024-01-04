@@ -7,19 +7,24 @@ from .serializers import MachineSerializer
 from equipment.models import Equipment
 from equipment.serializers import EquipmentSerializer
 from rest_framework.exceptions import APIException
+from rest_framework import viewsets
+from django.db.models import Q
 
-
-class MachineListCreateView(generics.ListCreateAPIView):
-    """
-    API endpoint that allows listing and creation of machines.
-    """
+class MachineViewSet(viewsets.ModelViewSet):
     serializer_class = MachineSerializer
 
     def get_queryset(self):
-        """Get the queryset for listing machines."""
         queryset = Machine.objects.all()
-        return queryset
 
+        search_param = self.request.query_params.get('search', None)
+        if search_param:
+            queryset = queryset.filter(
+                Q(name__icontains=search_param) |
+                Q(inventory_number__icontains=search_param) |
+                Q(location__icontains=search_param)
+            )
+
+        return queryset
     def list(self, request, *args, **kwargs):
         """
         Override the list method.
