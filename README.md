@@ -13,7 +13,7 @@ git clone https://github.com/aysemamermer/warehouseDjango.git
 
 Project Folder:
 ```
-cd warehouseDjango`
+cd warehouseDjango
 ```
 The Python packages required for the project are as follows:
 
