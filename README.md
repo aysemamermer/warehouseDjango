@@ -65,14 +65,6 @@ python manage.py migrate
 - **Parameters:** Equipment ID (pk) for GET, PUT, and DELETE
 - **Response:** JSON representation of equipment details or success message for DELETE.
 
-### Machine Details with Associated Equipment
-
-- **Endpoint:** `/api/equipment/<int:pk>/machine-details/`
-- **Methods:** GET
-- **Description:** 
-  - GET: Retrieve details of a specific equipment along with associated machine details.
-- **Parameters:** Equipment ID (pk)
-- **Response:** JSON representation of equipment details and associated machine details.
 
 ## Machine API Endpoints
 
@@ -97,14 +89,6 @@ python manage.py migrate
 - **Parameters:** Machine ID (pk) for GET, PUT, and DELETE
 - **Response:** JSON representation of machine details or success message for DELETE.
 
-### Machine Details with Associated Equipment
-
-- **Endpoint:** `/api/machines/<int:pk>/equipment-list/`
-- **Methods:** GET
-- **Description:** 
-  - GET: Retrieve details of a specific machine along with associated equipment list.
-- **Parameters:** Machine ID (pk)
-- **Response:** JSON representation of machine details and associated equipment list.
 
 
 ## IMPORTANT
