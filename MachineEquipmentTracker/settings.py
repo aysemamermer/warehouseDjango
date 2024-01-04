@@ -55,15 +55,15 @@ MIDDLEWARE = [
 # CORS
 """You must add your vue URL here"""
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080", "http://127.0.0.1:8000", "http://192.168.1.24:8080","http://192.168.1.24:8080",
-    "http://192.168.1.24:8080","http://172.20.10.2:8081" ,"http://172.20.10.2:8081","http://192.168.1.24:8081"
-
+    "http://localhost:8080", "http://127.0.0.1:8000", "http://192.168.1.24:8080", "http://192.168.1.24:8080",
+    "http://192.168.1.24:8080", "http://172.20.10.2:8081", "http://172.20.10.2:8081", "http://192.168.1.24:8081", "*"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "MachineEquipmentTracker.urls"
 import os
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 import os
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -128,7 +129,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
