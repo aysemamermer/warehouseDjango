@@ -25,7 +25,7 @@ You can install dependencies by going to the project folder and running the foll
 `python manage.py runserver`
 
 
-## Veritabanı
+## Database
 
 `python manage.py migrate`
 
