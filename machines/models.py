@@ -9,5 +9,8 @@ class Machine(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def formatted_created_at(self):
+        return self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+
     def __str__(self):
         return self.name

@@ -34,21 +34,8 @@ class EquipmentListCreateView(generics.ListCreateAPIView):
 
 
 class EquipmentDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """Specify the queryset and serializer class for the view"""
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
-
-    def retrieve(self, request, *args, **kwargs):
-        """Override the retrieve method to include machine details in the response"""
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        """"Serialize the associated machine (if exists)"""
-        machine_serializer = MachineSerializer(instance.machine) if instance.machine else None
-        data = {
-            'equipment_details': serializer.data,
-            'machine_details': machine_serializer.data if machine_serializer else None
-        }
-        return Response(data)
 
     def update(self, request, *args, **kwargs):
         """Override the update method to include success_message in the response"""

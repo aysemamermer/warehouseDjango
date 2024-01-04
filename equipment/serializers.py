@@ -10,7 +10,7 @@ class EquipmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Equipment
-        fields = ['id', 'name', 'inventory_number', 'machine_id', 'created_at']
+        fields = ['id', 'name', 'inventory_number', 'machine_id', 'formatted_created_at']
 
     def create(self, validated_data):
         """Extract machine_id if provided and pop it from validated_data"""

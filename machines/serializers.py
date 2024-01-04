@@ -10,7 +10,7 @@ class MachineSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Machine
-        fields = ['id', 'name', 'inventory_number', 'location', 'description', 'created_at']
+        fields = ['id', 'name', 'inventory_number', 'location', 'description', 'formatted_created_at']
 
     def create(self, validated_data):
         """
