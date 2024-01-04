@@ -90,7 +90,7 @@ python manage.py migrate
 - **Response:** JSON representation of machine details or success message for DELETE.
 
 ### Get connected equipments
-- **Endpoint:** `machines/<int:pk>/equipments/`
+- **Endpoint:** `/api/machines/<int:pk>/equipments/`
 - **Methods:** GET
 
 
