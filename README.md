@@ -4,6 +4,35 @@
 
 This Django REST framework (DRF) project provides API endpoints for managing machines and equipment associated with those machines.
 
+
+## Installation
+
+git clone https://github.com/aysemamermer/warehouseDjango.git
+cd warehouseDjango
+
+The Python packages required for the project are as follows:
+
+-Django==5.0
+-djangorestframework==3.14.0
+
+You can install dependencies by going to the project folder and running the following command:
+
+-pip install -r requirements.txt
+
+
+-python manage.py createsuperuser
+
+python manage.py runserver
+
+
+## Veritabanı
+
+python manage.py migrate
+
+
+
+
+
 ## Equipment API Endpoints
 
 ### List and Create Equipment
@@ -74,3 +103,5 @@ This Django REST framework (DRF) project provides API endpoints for managing mac
 - If an attempt is made to delete a machine associated with equipment, a 400 Bad Request error will be returned along with an appropriate error message.
 
 Feel free to explore and use the provided API endpoints for equipment and machine management.
+
+
