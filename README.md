@@ -107,5 +107,9 @@ python manage.py migrate
 - **Response:** JSON representation of machine details and associated equipment list.
 
 
+## IMPORTANT
+You must add your origin to settings.py file 
 
-
+```
+CORS_ALLOWED_ORIGINS = ["http://localhost:8080","http://your.origin"]
+```
