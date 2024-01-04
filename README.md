@@ -106,10 +106,6 @@ python manage.py migrate
 - **Parameters:** Machine ID (pk)
 - **Response:** JSON representation of machine details and associated equipment list.
 
-## Additional Notes
-- Success messages are included in the response for create, update, and delete operations.
-- If an attempt is made to delete a machine associated with equipment, a 400 Bad Request error will be returned along with an appropriate error message.
 
-Feel free to explore and use the provided API endpoints for equipment and machine management.
 
 
