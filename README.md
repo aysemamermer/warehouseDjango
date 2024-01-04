@@ -6,9 +6,15 @@ This Django REST framework (DRF) project provides API endpoints for managing mac
 
 ## Installation
 
+Install Project:
+```
 git clone https://github.com/aysemamermer/warehouseDjango.git
-`cd warehouseDjango`
+```
 
+Project Folder:
+```
+cd warehouseDjango`
+```
 The Python packages required for the project are as follows:
 
 `Django==5.0`
@@ -16,19 +22,25 @@ The Python packages required for the project are as follows:
 `djangorestframework==3.14.0`
 
 You can install dependencies by going to the project folder and running the following command:
+```
+pip install -r requirements.txt
+```
 
-`pip install -r requirements.txt`
+Create user:
+```
+python manage.py createsuperuser
+```
 
-
-`python manage.py createsuperuser`
-
-`python manage.py runserver`
-
+Run:
+```
+python manage.py runserver
+```
 
 ## Database
 
-`python manage.py migrate`
-
+```
+python manage.py migrate
+```
 
 ## Equipment API Endpoints
 
