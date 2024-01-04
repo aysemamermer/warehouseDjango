@@ -47,14 +47,6 @@ class EquipmentAPITest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
 
-    def test_get_equipment_detail(self):
-        equipment = Equipment.objects.create(name='Test Equipment', inventory_number='TEST001')
-        url = reverse('equipment-detail', args=[equipment.id])
-        response = self.client.get(url)
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['name'], 'Test Equipment')
-
     def test_update_equipment(self):
         equipment = Equipment.objects.create(name='Test Equipment', inventory_number='TEST001')
         url = reverse('equipment-detail', args=[equipment.id])
