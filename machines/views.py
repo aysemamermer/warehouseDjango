@@ -1,4 +1,3 @@
-# machines/views.py
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.response import Response
@@ -11,17 +10,25 @@ from rest_framework.exceptions import APIException
 
 
 class MachineListCreateView(generics.ListCreateAPIView):
-    queryset = Machine.objects.all()
+    """
+    API endpoint that allows listing and creation of machines.
+    """
     serializer_class = MachineSerializer
 
+    def get_queryset(self):
+        """Get the queryset for listing machines."""
+        queryset = Machine.objects.all()
+        return queryset
+
     def list(self, request, *args, **kwargs):
+        """
+        Override the list method.
+        """
         response = super().list(request, *args, **kwargs)
-        success_message = getattr(self, 'success_message', None)
-        if success_message:
-            response.data['success_message'] = success_message
         return response
 
     def create(self, request, *args, **kwargs):
+        """Override the create method to include a success message in the response."""
         response = super().create(request, *args, **kwargs)
         success_message = getattr(self, 'success_message', None)
         if success_message:
@@ -29,6 +36,7 @@ class MachineListCreateView(generics.ListCreateAPIView):
         return response
 
     def update(self, request, *args, **kwargs):
+        """Override the update method to include a success message in the response."""
         response = super().update(request, *args, **kwargs)
         success_message = getattr(self, 'success_message', None)
         if success_message:
@@ -37,10 +45,14 @@ class MachineListCreateView(generics.ListCreateAPIView):
 
 
 class MachineDeleteView(generics.DestroyAPIView):
+    """
+    API endpoint that allows deletion of a machine.
+    """
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer
 
     def delete(self, request, *args, **kwargs):
+        """Override the delete method to check for associated equipment and provide a success message."""
         instance = self.get_object()
         equipment_count = Equipment.objects.filter(machine=instance).count()
 
@@ -51,16 +63,19 @@ class MachineDeleteView(generics.DestroyAPIView):
         self.perform_destroy(instance)
         success_message = f"Machine {instance.name} deleted successfully."
 
-        # Include success_message in the response data
         data = {'detail': success_message, 'success_message': success_message}
         return Response(data, status=status.HTTP_204_NO_CONTENT)
 
 
 class MachineDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that allows retrieval, update, and deletion of a machine.
+    """
     queryset = Machine.objects.all()
     serializer_class = MachineSerializer
 
     def retrieve(self, request, *args, **kwargs):
+        """Override the retrieve method to include equipment details in the response."""
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         equipment_queryset = Equipment.objects.filter(machine=instance)
@@ -73,8 +88,12 @@ class MachineDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class MachineEquipmentListView(generics.ListAPIView):
+    """
+    API endpoint that allows listing of equipment associated with a specific machine.
+    """
     serializer_class = EquipmentSerializer
 
     def get_queryset(self):
+        """Get the queryset for listing equipment associated with a machine."""
         machine = get_object_or_404(Machine, pk=self.kwargs['pk'])
         return machine.equipment_set.all()
